@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -51,6 +55,10 @@
                     <label for="mascotas">¿SE ADMITEN MASCOTAS? </label>
                 </div>
 
+                <div class="form-group">
+                    <label for="servicios">Selecciona los servicios</label>
+                    {!! Form::select('servicios', $servicios, null,['class'=>'form-control','name'=>'servicios[]','multiple'=>'multiple']) !!}
+                </div>
                 
                 <div class="form-group">
                     <label for="precio">INGRESE PRECIO(EN DOLARES) POR NOCHE </label>
@@ -70,4 +78,8 @@
         </div>
     </div>
 </div>
+
+@endsection
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 @endsection

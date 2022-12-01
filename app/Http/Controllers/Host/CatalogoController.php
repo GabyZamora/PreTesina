@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Lugar;
 use App\Models\Categoria;
 use App\Models\Ruta;
+use App\Models\Servicio;
 use Illumitate\Support\Str;
 use Image;
 use Auth;
@@ -26,11 +27,13 @@ class CatalogoController extends Controller
     public function create(){
         $rutas= Ruta::orderBy('nombre','ASC')->pluck('nombre','id'); 
         $categorias= Categoria::orderBy('nombre','ASC')->pluck('nombre','id');
-        return view('host.catalogo.create',compact("rutas", "categorias"));       
+        $servicios = Servicio::orderBy('nombre','ASC')->pluck('nombre','id');
+        return view('host.catalogo.create',compact("rutas", "categorias", "servicios"));       
     }
 
     
     public function store(Request $request){
+
         $lugar = new Lugar($request->all());
 
         if($request->hasFile('urlfoto')){
@@ -55,6 +58,7 @@ class CatalogoController extends Controller
         $lugar->categoria_id = $request->categoria_id;
         $lugar->user_id   = Auth::user()->id;
         $lugar->save();
+        $lugar->Servicio()->attach($request->input('servicios'));
         return redirect('/catalogo');
     }
 

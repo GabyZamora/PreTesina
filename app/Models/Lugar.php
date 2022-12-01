@@ -40,6 +40,9 @@ class Lugar extends Model
     public function Categoria(){
         return $this->belongsTo("App\Models\Categoria");
     }
+    public function Servicio(){
+        return $this->belongsToMany(Servicio::class, 'serv_lugars');
+    }
 
 
 }

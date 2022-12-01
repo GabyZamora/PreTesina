@@ -15,7 +15,7 @@ class CreateServLugarsTable extends Migration
     {
         Schema::create('serv_lugars', function (Blueprint $table) {
             $table->id();
-            $table ->foreignId('lugars_id')->constrained();
+            $table ->foreignId('lugar_id')->constrained();
             $table ->foreignId('servicio_id')->constrained();
             $table->timestamps();
         });
