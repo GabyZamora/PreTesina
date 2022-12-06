@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="{{asset('css/picker.min.css')}}">
 @endsection
 
 @section('content')
@@ -56,8 +56,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="servicios">Selecciona los servicios</label>
-                    {!! Form::select('servicios', $servicios, null,['class'=>'form-control','name'=>'servicios[]','multiple'=>'multiple']) !!}
+                    <label for="servicios">SELECCIONA LOS SERVICIOS(PRESIONA CTRL Y SELECCIONA)</label>
+                    {!! Form::select('servicios', $servicios, null,['class'=>'form-control','id'=>'multipleselect','name'=>'servicios[]','multiple'=>'multiple']) !!}
                 </div>
                 
                 <div class="form-group">
@@ -81,5 +81,8 @@
 
 @endsection
 @section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script>
+    $('#multipleselect').picker();
+</script>
+<script src="{{asset('js/picker.min.js')}}"></script>
 @endsection

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Reserva;
 use App\Models\Lugar;
 use App\Models\Estado;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Auth;
 
@@ -14,18 +15,16 @@ class ReservaController extends Controller
 {
     public function index(Request $request){
 
-        $busqueda =  $request->busqueda;
-        $reservas = Reserva::where('nombre','LIKE','%'.$busqueda.'%')
-        ->paginate(5);
-        return view("host.reserva.index", compact('reservas','busqueda'));
+        $reservas = Reserva::all();
+        return view("host.reserva.index", compact('reservas'));
 
     }
 
-    public function create(){
+    public function create(Request $request){
+
         $lugar = Lugar::orderBy('nombre','ASC')->pluck('nombre','id');
         return view('host.reserva.create',compact("lugar"));       
     }
-
 
     public function store(Request $request){
         $reserva = new Reserva($request->all());

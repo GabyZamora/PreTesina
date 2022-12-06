@@ -31,4 +31,5 @@ class Reserva extends Model
     public function Lugar(){
         return $this->belongsTo("App\Models\Lugar"); 
     }
+
 }

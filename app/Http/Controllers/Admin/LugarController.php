@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Lugar;
 use App\Models\Ruta;
 use App\Models\Categoria;
+use App\Models\Servicio;
 use Illuminate\Support\Str;
 use Image;
 use Auth;
@@ -20,14 +21,7 @@ class LugarController extends Controller
         ->paginate(5);
         return view("admin.lugar.index", compact('lugar','busqueda'));
 
-    }
-
-    public function create(){
-        $rutas= Ruta::orderBy('nombre','ASC')->pluck('nombre','id'); 
-        $categorias= Categoria::orderBy('nombre','ASC')->pluck('nombre','id');
-        return view('host.catalogo.create',compact("rutas", "categorias"));       
-    }
-
+    } 
 
     public function store(Request $request){
         $lugar = new Lugar($request->all());
@@ -61,8 +55,8 @@ class LugarController extends Controller
         $lugar = Lugar::findOrFail($id);
         $rutas= Ruta::orderBy('nombre','ASC')->pluck('nombre','id');
         $categorias = Categoria::orderBy('nombre','ASC')->pluck('nombre','id');
-
-        return view('admin.lugar.edit',compact('lugar',"rutas", "categorias"));
+        $servicios = Servicio::orderBy('nombre','ASC')->pluck('nombre','id');
+        return view('admin.lugar.edit',compact('lugar',"rutas", "categorias", "servicios"));
     }
 
     public function update(Request $request,$id){
@@ -94,6 +88,7 @@ class LugarController extends Controller
         $lugar->ruta_id  =   $request->ruta_id;
         $lugar->categoria_id = $request->categoria_id;
         $lugar->save();
+        $lugar->Servicio()->attach($request->input('servicios'));
         return redirect('/admin/lugar');    
     }
 

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+<link rel="stylesheet" href="{{asset('css/picker.min.css')}}">
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -53,6 +57,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="servicios">SELECCIONA LOS SERVICIOS(PRESIONA CTRL Y SELECCIONA)</label>
+                    {!! Form::select('servicios', $servicios, $lugar->servicio_id ,['class'=>'form-control','id'=>'multipleselect','name'=>'servicios[]','multiple'=>'multiple']) !!}
+                </div>
+                
+                <div class="form-group">
                     <label for="precio">PRECIO</label>
                     {!!Form::text('precio',$lugar->precio,['class'=>'form-control']) !!}
                 </div>
@@ -68,4 +77,10 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script>
+    $('#multipleselect').picker();
+</script>
+<script src="{{asset('js/picker.min.js')}}"></script>
 @endsection

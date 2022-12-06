@@ -8,7 +8,7 @@
             <div class="jumbotron">
                 
                 <div class="form-group">
-                    <label for="lugar_id">ZONAS </label>
+                    <label for="lugar_id">ELIGE LUGAR </label>
                     {!!Form::select('lugar_id', $lugar, null,['class'=>'form-control']) !!}
                 </div>
 
@@ -17,7 +17,7 @@
                         <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                     </div>
                     <label for="checkin">FECHA DE INGRESO</label>
-                    {!!Form::date('checkin',null,['class'=>'form-control']) !!}
+                    {!!Form::date('checkin',null,['class'=>'form-control', 'id'=>'checkin', 'oninput'=>'calcularPrecioTotal()']) !!}
                 </div>
 
                 <div class="form-group">                            
@@ -25,7 +25,7 @@
                         <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                     </div>
                     <label for="checkout">FECHA DE SALIDA</label>
-                    {!!Form::date('checkout',null,['class'=>'form-control']) !!}
+                    {!!Form::date('checkout',null,['class'=>'form-control', 'id'=>'checkout', 'oninput'=>'calcularPrecioTotal()'])  !!}
                 </div>
 
                 <div class="form-group">
@@ -39,7 +39,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="preciototal"></label>
+                    <label for="preciototal">PRECIO TOTAL</label>
+                    {!!Form::text('preciototal',null,['class'=>'form-control', 'id'=>'precioTotal']) !!}
                 </div>
 
             </div>                <br>
@@ -51,7 +52,25 @@
 </div>
 @endsection
 @section('scripts')
+<script>
+    function calcularPrecioTotal() {
+        const checkIn = new Date(document.getElementById("checkin").value);
+        const checkOut = new Date(document.getElementById("checkout").value);
+        if (checkOut > checkIn)
+        {
+            const diff = checkOut.getTime() - checkIn.getTime();
+            const totalDias = Math.round(diff / (1000 * 60 * 60 * 24)); 
+            console.log(totalDias)
+            //const precioTotal = totalDias * precio;
+            //document.getElementById("precioTotal").value = precioTotal;
 
-<script src="{{}}/assets-old/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicket.min.js"></script>
+        }
+        else if (checkOut != null && checkOut < checkIn) {
+            alert("La fecha final de la promoción debe ser mayor a la fecha inicial");
+            const totalDias = 0;
+        }
 
+    }
+
+    </script>
 @endsection
